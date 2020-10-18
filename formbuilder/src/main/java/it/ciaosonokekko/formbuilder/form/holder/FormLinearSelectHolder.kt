@@ -2,6 +2,7 @@ package it.ciaosonokekko.formbuilder.form.holder
 
 import android.content.Context
 import android.view.View
+import androidx.core.content.ContextCompat
 import it.ciaosonokekko.formbuilder.R
 import it.ciaosonokekko.formbuilder.databinding.ViewFormLinearSelectBinding
 import it.ciaosonokekko.formbuilder.extension.createActionSheet
@@ -37,9 +38,9 @@ class FormLinearSelectHolder(_context: Context, _view: ViewFormLinearSelectBindi
         view.txtSelect.text = data.value
 
         if (!data.value.isNullOrEmpty() || data.mandatory == false) {
-            view.txtTitle.setTextColor(context.getColor(R.color.colorText))
+            view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorText))
         } else {
-            view.txtTitle.setTextColor(context.getColor(R.color.colorRed))
+            view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
         }
 
         val thisView = this
