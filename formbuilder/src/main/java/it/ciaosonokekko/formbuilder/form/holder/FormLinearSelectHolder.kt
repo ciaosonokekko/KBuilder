@@ -4,7 +4,8 @@ import android.content.Context
 import android.view.View
 import it.ciaosonokekko.formbuilder.R
 import it.ciaosonokekko.formbuilder.databinding.ViewFormLinearSelectBinding
-import it.ciaosonokekko.formbuilder.extensions.createActionSheet
+import it.ciaosonokekko.formbuilder.extension.createActionSheet
+import it.ciaosonokekko.formbuilder.extension.requestFocusAndHideKeyboard
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.FormViewBaseHolder
 
@@ -43,6 +44,7 @@ class FormLinearSelectHolder(_context: Context, _view: ViewFormLinearSelectBindi
 
         val thisView = this
         view.root.setOnClickListener {
+            context.requestFocusAndHideKeyboard(view.root)
             data.values?.let { list ->
                 context.createActionSheet(data.title, list.toMutableList()) { position ->
                     list.getOrNull(position)?.let {

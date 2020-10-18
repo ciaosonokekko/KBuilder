@@ -42,13 +42,20 @@ class FormRecyclerView : ConstraintLayout {
         view?.container?.adapter = adapter
     }
 
-    fun updateElements(_elements: MutableList<Form>) {
-        elements = _elements
-        adapter?.updateElements(elements)
-    }
-
     fun addElement(element: Form) {
         adapter?.addElement(element)
+    }
+
+    fun addElements(elements: MutableList<Form>) {
+        elements.forEach {
+            adapter?.addElement(it)
+        }
+    }
+
+    fun addElements(vararg elements: Form) {
+        elements.forEach {
+            adapter?.addElement(it)
+        }
     }
 
     fun updateElementAt(element: Form, position: Int) {
@@ -64,6 +71,11 @@ class FormRecyclerView : ConstraintLayout {
         } else {
             addElement(element)
         }
+    }
+
+    fun updateElements(_elements: MutableList<Form>) {
+        elements = _elements
+        adapter?.updateElements(elements)
     }
 
     fun updateElementValueFromId(value: String? = null, id: String) {

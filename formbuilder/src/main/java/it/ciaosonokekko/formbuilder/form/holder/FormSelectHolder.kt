@@ -4,7 +4,8 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import it.ciaosonokekko.formbuilder.databinding.ViewFormSelectBinding
-import it.ciaosonokekko.formbuilder.extensions.createActionSheet
+import it.ciaosonokekko.formbuilder.extension.createActionSheet
+import it.ciaosonokekko.formbuilder.extension.requestFocusAndHideKeyboard
 import it.ciaosonokekko.formbuilder.form.Form
 
 class FormSelectHolder(_context: Context, _view: ViewFormSelectBinding) :
@@ -40,6 +41,7 @@ class FormSelectHolder(_context: Context, _view: ViewFormSelectBinding) :
 
         val thisView = this
         view.root.setOnClickListener {
+            context.requestFocusAndHideKeyboard(view.root)
             data.values?.let { list ->
                 context.createActionSheet(data.title, list.toMutableList()) { position ->
                     list.getOrNull(position)?.let {

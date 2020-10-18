@@ -1,6 +1,5 @@
 package it.ciaosonokekko.formbuilder.form.holder
 
-import android.content.Context
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -10,16 +9,15 @@ import it.ciaosonokekko.formbuilder.databinding.ViewFormTextBinding
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.FormTextType
 
-class FormTextHolder(_context: Context, _view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view.root) {
+class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view.root) {
 
     private var view: ViewFormTextBinding = _view
-    private var context: Context = _context
 
     fun bind(data: Form.Text, onValueUpdate: (String) -> Unit) {
         setup(data, onValueUpdate)
     }
 
-    fun setup(data: Form.Text, onValueUpdate: (String) -> Unit) {
+    private fun setup(data: Form.Text, onValueUpdate: (String) -> Unit) {
         view.txtTitle.text = data.title
 
         data.subTitle?.let {
@@ -65,15 +63,29 @@ class FormTextHolder(_context: Context, _view: ViewFormTextBinding) : RecyclerVi
 
             FormTextType.Numeric -> {
                 view.txtText.inputType = InputType.TYPE_CLASS_NUMBER
+                if (data.numberDecimal == true) {
+                    view.txtText.inputType = view.txtText.inputType or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                }
                 data.value?.let {
-                    view.txtText.setText(it.toFloat().toString())
+                    if (data.numberDecimal == true) {
+                        view.txtText.setText(it.toFloat().toString())
+                    } else {
+                        view.txtText.setText(it.toInt().toString())
+                    }
                 }
             }
 
             FormTextType.Range -> {
                 view.txtText.inputType = InputType.TYPE_CLASS_NUMBER
+                if (data.numberDecimal == true) {
+                    view.txtText.inputType = view.txtText.inputType or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                }
                 data.value?.let {
-                    view.txtText.setText(it.toFloat().toString())
+                    if (data.numberDecimal == true) {
+                        view.txtText.setText(it.toFloat().toString())
+                    } else {
+                        view.txtText.setText(it.toInt().toString())
+                    }
                 }
             }
         }

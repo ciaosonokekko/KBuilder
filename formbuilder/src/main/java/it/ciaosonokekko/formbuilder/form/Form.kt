@@ -6,7 +6,6 @@ import it.ciaosonokekko.formbuilder.form.holder.FormLinearSelectHolder
 import it.ciaosonokekko.formbuilder.form.holder.FormSelectHolder
 import java.util.*
 
-const val FORM_ID = "FORM_ID"
 
 enum class FormTextType {
     Text,
@@ -25,6 +24,7 @@ sealed class Form(val id: String = UUID.randomUUID().toString(), var value: Stri
         val hint: String? = null,
         val mandatory: Boolean? = false,
         val editable: Boolean? = true,
+        val numberDecimal: Boolean? = false,
         val type: FormTextType? = FormTextType.Text,
         val onValueUpdate: (String) -> Unit = {}
     ) : Form(value = value)

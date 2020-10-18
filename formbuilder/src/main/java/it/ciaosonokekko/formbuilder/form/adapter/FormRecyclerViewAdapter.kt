@@ -19,7 +19,7 @@ const val ITEM_VIEW_TYPE_SWITCH = 3
 const val ITEM_VIEW_TYPE_SELECT = 4
 const val ITEM_VIEW_TYPE_LINEAR_SELECT = 5
 
-class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
+class FormRecyclerViewAdapter(_elements: MutableList<Form>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var elements: MutableList<Form> = _elements
@@ -39,7 +39,7 @@ class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
             ITEM_VIEW_TYPE_TEXT -> {
                 val inflatedView =
                     ViewFormTextBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return FormTextHolder(parent.context, inflatedView)
+                return FormTextHolder(inflatedView)
             }
 
             ITEM_VIEW_TYPE_LINEAR_SELECT -> {
