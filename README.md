@@ -1,7 +1,9 @@
 # KBuilder
 
 [![API](https://img.shields.io/badge/API-16%2B-red.svg?style=flat)](https://android-arsenal.com/api?level=16)
+![Android CI](https://github.com/ciaosonokekko/KBuilder/workflows/Android%20CI/badge.svg)
 [![](https://jitpack.io/v/ciaosonokekko/KBuilder.svg)](https://jitpack.io/#ciaosonokekko/KBuilder/master)
+
 
 KBuilder is an Android Library to build forms in an easy way
 
