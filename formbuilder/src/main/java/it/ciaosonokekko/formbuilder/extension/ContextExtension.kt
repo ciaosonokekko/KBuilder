@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import com.khoiron.actionsheets.ActionSheet
 import com.khoiron.actionsheets.callback.ActionSheetCallBack
 import it.ciaosonokekko.formbuilder.R
@@ -18,9 +19,9 @@ fun Context.createActionSheet(title: String, data: MutableList<String>, onClick:
         .setSizeTextTitle(20F)
         .setSizeTextCancel(20F)
         .setSizeTextData(16F)
-        .setColorTitleCancel(getColor(R.color.colorRed))
-        .setColorTitle(getColor(R.color.colorBlue))
-        .setColorData(getColor(R.color.colorText))
+        .setColorTitleCancel(ContextCompat.getColor(this, R.color.colorRed))
+        .setColorTitle(ContextCompat.getColor(this, R.color.colorBlue))
+        .setColorData(ContextCompat.getColor(this, R.color.colorText))
         .create(object : ActionSheetCallBack {
             override fun data(data: String, position: Int) {
                 onClick(position)
