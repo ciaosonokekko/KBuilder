@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBlack">#0B0808</color>
+    <color name="colorDarkGray">#282727</color>
+    <color name="colorSoftGray">#F7F6F8</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlue">#299BCF</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorOrange">#FF9800</color>
+    <color name="colorYellow">#FFEB3B</color>
+    <color name="colorDarkBlue">#2F3C48</color>
+    <color name="colorRed">#FF1818</color>
+
+    <!-- Day/Night -->
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorText">#0B0808</color>
+</resources>
