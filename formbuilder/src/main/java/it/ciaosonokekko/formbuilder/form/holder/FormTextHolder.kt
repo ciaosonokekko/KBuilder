@@ -61,21 +61,13 @@ class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view
                 view.txtText.setText(data.value)
             }
 
-            FormTextType.Numeric -> {
-                view.txtText.inputType = InputType.TYPE_CLASS_NUMBER
-                if (data.numberDecimal == true) {
-                    view.txtText.inputType = view.txtText.inputType or InputType.TYPE_NUMBER_FLAG_DECIMAL
-                }
-                data.value?.let {
-                    if (data.numberDecimal == true) {
-                        view.txtText.setText(it.toFloat().toString())
-                    } else {
-                        view.txtText.setText(it.toInt().toString())
-                    }
-                }
+            FormTextType.TextArea -> {
+                view.txtText.inputType = InputType.TYPE_CLASS_TEXT
+                view.txtText.setText(data.value)
+                view.txtText.setLines(3)
             }
 
-            FormTextType.Range -> {
+            FormTextType.Numeric -> {
                 view.txtText.inputType = InputType.TYPE_CLASS_NUMBER
                 if (data.numberDecimal == true) {
                     view.txtText.inputType = view.txtText.inputType or InputType.TYPE_NUMBER_FLAG_DECIMAL
