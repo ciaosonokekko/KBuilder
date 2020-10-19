@@ -3,23 +3,20 @@ package it.ciaosonokekko.formbuilder.form.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import it.ciaosonokekko.formbuilder.databinding.ViewFormLinearSelectBinding
-import it.ciaosonokekko.formbuilder.databinding.ViewFormSectionBinding
-import it.ciaosonokekko.formbuilder.databinding.ViewFormSelectBinding
-import it.ciaosonokekko.formbuilder.databinding.ViewFormTextBinding
+import it.ciaosonokekko.formbuilder.databinding.*
 import it.ciaosonokekko.formbuilder.form.Form
-import it.ciaosonokekko.formbuilder.form.holder.FormLinearSelectHolder
-import it.ciaosonokekko.formbuilder.form.holder.FormTextHolder
+import it.ciaosonokekko.formbuilder.form.holder.*
 import it.ciaosonokekko.formbuilder.form.view.FormSectionHolder
-import it.ciaosonokekko.formbuilder.form.holder.FormSelectHolder
 
 const val ITEM_VIEW_TYPE_SECTION = 1
 const val ITEM_VIEW_TYPE_TEXT = 2
 const val ITEM_VIEW_TYPE_SWITCH = 3
 const val ITEM_VIEW_TYPE_SELECT = 4
 const val ITEM_VIEW_TYPE_LINEAR_SELECT = 5
+const val ITEM_VIEW_TYPE_BUTTON = 6
+const val ITEM_VIEW_TYPE_DATE_TIME_BUTTON = 7
 
-class FormRecyclerViewAdapter(_elements: MutableList<Form>) :
+class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var elements: MutableList<Form> = _elements
@@ -60,8 +57,22 @@ class FormRecyclerViewAdapter(_elements: MutableList<Form>) :
                 return FormSelectHolder(parent.context, inflatedView)
             }
 
-            else -> {
+            ITEM_VIEW_TYPE_BUTTON -> {
+                val inflatedView = ViewFormButtonBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                return FormButtonHolder(parent.context, inflatedView)
+            }
 
+            ITEM_VIEW_TYPE_DATE_TIME_BUTTON -> {
+                val inflatedView = ViewFormButtonBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                return FormDateTimeButtonHolder(parent.context, inflatedView)
             }
         }
 
@@ -103,6 +114,18 @@ class FormRecyclerViewAdapter(_elements: MutableList<Form>) :
                 }
             }
 
+            ITEM_VIEW_TYPE_BUTTON -> {
+                (elements[position] as? Form.Button)?.let {
+                    (holder as? FormButtonHolder)?.bind(it)
+                }
+            }
+
+            ITEM_VIEW_TYPE_DATE_TIME_BUTTON -> {
+                (elements[position] as? Form.DateTimeButton)?.let {
+                    (holder as? FormDateTimeButtonHolder)?.bind(it)
+                }
+            }
+
             else -> {
 
             }
@@ -116,6 +139,8 @@ class FormRecyclerViewAdapter(_elements: MutableList<Form>) :
             is Form.Switch -> ITEM_VIEW_TYPE_SWITCH
             is Form.Select -> ITEM_VIEW_TYPE_SELECT
             is Form.LinearSelect -> ITEM_VIEW_TYPE_LINEAR_SELECT
+            is Form.Button -> ITEM_VIEW_TYPE_BUTTON
+            is Form.DateTimeButton -> ITEM_VIEW_TYPE_DATE_TIME_BUTTON
         }
     }
 
