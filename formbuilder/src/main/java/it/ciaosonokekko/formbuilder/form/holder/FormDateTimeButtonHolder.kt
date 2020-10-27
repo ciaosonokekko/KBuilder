@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import it.ciaosonokekko.formbuilder.databinding.ViewFormButtonBinding
 import it.ciaosonokekko.formbuilder.extension.*
@@ -26,6 +27,16 @@ class FormDateTimeButtonHolder(_context: Context, _view: ViewFormButtonBinding) 
     }
 
     private fun setup(data: Form.DateTimeButton) {
+
+        data.subTitle?.let {
+            view.txtSubtitle.text = it
+        }
+
+        if (view.txtSubtitle.text.isNullOrEmpty()) {
+            view.txtSubtitle.visibility = View.GONE
+        }
+
+        view.btnMain.isEnabled = data.editable == true
 
         view.btnMain.text = data.hint
         data.dateValue?.let {
