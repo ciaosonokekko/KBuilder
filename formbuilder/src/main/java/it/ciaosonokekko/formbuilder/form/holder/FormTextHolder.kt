@@ -1,23 +1,34 @@
 package it.ciaosonokekko.formbuilder.form.holder
 
+import android.content.Context
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import android.view.View.FOCUS_FORWARD
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import it.ciaosonokekko.formbuilder.R
 import it.ciaosonokekko.formbuilder.databinding.ViewFormTextBinding
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.FormTextType
 
-
-class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view.root) {
+class FormTextHolder(_context: Context, _view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view.root) {
 
     private var view: ViewFormTextBinding = _view
+    private var context: Context = _context
 
     fun bind(data: Form.Text, onValueUpdate: (String) -> Unit) {
         setup(data, onValueUpdate)
+    }
+
+    fun checkMandatory(data: Form.Text) {
+        if (!data.value.isNullOrEmpty() || data.mandatory == false) {
+            view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorText))
+        } else {
+            view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+        }
     }
 
     @Suppress("UNUSED_EXPRESSION")
@@ -35,6 +46,8 @@ class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view
         data.hint?.let {
             view.txtText.hint = data.hint
         }
+
+        checkMandatory(data)
 
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

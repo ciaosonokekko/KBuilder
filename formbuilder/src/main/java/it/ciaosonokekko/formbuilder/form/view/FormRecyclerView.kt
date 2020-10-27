@@ -108,4 +108,20 @@ class FormRecyclerView : ConstraintLayout {
 
         return -1
     }
+
+    val invalidElements: MutableList<Form>
+    get() {
+        val invalidElements: MutableList<Form> = mutableListOf()
+        elements.forEach { form ->
+            if (form.isValid()) {
+                invalidElements.add(form)
+            }
+        }
+        return invalidElements
+    }
+
+    val validateForm: Boolean
+    get() {
+        return invalidElements.isEmpty()
+    }
 }

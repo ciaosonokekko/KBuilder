@@ -2,7 +2,9 @@ package it.ciaosonokekko.formbuilder.form.holder
 
 import android.content.Context
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import it.ciaosonokekko.formbuilder.R
 import it.ciaosonokekko.formbuilder.databinding.ViewFormSelectBinding
 import it.ciaosonokekko.formbuilder.extension.getActivity
 import it.ciaosonokekko.formbuilder.extension.requestFocusAndHideKeyboard
@@ -28,7 +30,15 @@ class FormSelectHolder(_context: Context, _view: ViewFormSelectBinding) :
     fun updateValues(values: List<String>) {
         var value = ""
         values.forEach { value += "$it, " }
-        view.txtSelect.text = value
+        updateValue(value)
+    }
+
+    fun checkMandatory(data: Form.Select) {
+        if (!data.value.isNullOrEmpty() || data.mandatory == false) {
+            view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorText))
+        } else {
+            view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+        }
     }
 
     private fun setup(data: Form.Select) {
@@ -48,6 +58,8 @@ class FormSelectHolder(_context: Context, _view: ViewFormSelectBinding) :
         if (view.txtSubtitle.text.isNullOrEmpty()) {
             view.txtSubtitle.visibility = View.GONE
         }
+
+        checkMandatory(data)
 
         val thisView = this
         view.root.setOnClickListener {

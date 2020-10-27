@@ -36,7 +36,7 @@ class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
             ITEM_VIEW_TYPE_TEXT -> {
                 val inflatedView =
                     ViewFormTextBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return FormTextHolder(inflatedView)
+                return FormTextHolder(parent.context, inflatedView)
             }
 
             ITEM_VIEW_TYPE_LINEAR_SELECT -> {

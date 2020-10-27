@@ -26,11 +26,9 @@ class FormDateTimeButtonHolder(_context: Context, _view: ViewFormButtonBinding) 
     }
 
     private fun setup(data: Form.DateTimeButton) {
-//        view.btnMain.text = data.title
 
         view.btnMain.text = data.hint
         data.dateValue?.let {
-//            view.btnMain.text = it
 
             when(data.type) {
                 FormDateTimeButtonType.DateTime -> {
