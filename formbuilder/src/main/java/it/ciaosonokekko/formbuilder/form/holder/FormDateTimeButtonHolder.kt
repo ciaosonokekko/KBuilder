@@ -6,9 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import it.ciaosonokekko.formbuilder.databinding.ViewFormButtonBinding
-import it.ciaosonokekko.formbuilder.extension.toHumanDate
-import it.ciaosonokekko.formbuilder.extension.toHumanFormatFull
-import it.ciaosonokekko.formbuilder.extension.toHumanHour
+import it.ciaosonokekko.formbuilder.extension.*
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.FormDateTimeButtonType
 import java.util.*
@@ -36,15 +34,15 @@ class FormDateTimeButtonHolder(_context: Context, _view: ViewFormButtonBinding) 
 
             when(data.type) {
                 FormDateTimeButtonType.DateTime -> {
-                    view.btnMain.text = it.toHumanFormatFull()
+                    view.btnMain.text = it.toHumanFullFormat()
                 }
 
                 FormDateTimeButtonType.Time -> {
-                    view.btnMain.text = it.toHumanHour()
+                    view.btnMain.text = it.toHumanHourFormat()
                 }
 
                 FormDateTimeButtonType.Date -> {
-                    view.btnMain.text = it.toHumanDate()
+                    view.btnMain.text = it.toHumanDateFormat()
                 }
             }
         }
@@ -76,7 +74,7 @@ class FormDateTimeButtonHolder(_context: Context, _view: ViewFormButtonBinding) 
                             newCalendar.set(Calendar.MINUTE, newMinute)
 
                             data.dateValue = newCalendar.time
-                            data.value = newCalendar.time.toHumanFormatFull()
+                            data.value = newCalendar.time.toHumanFullFormat()
                             view.btnMain.text = data.value
                             data.onClickView(data, this)
 
@@ -96,8 +94,8 @@ class FormDateTimeButtonHolder(_context: Context, _view: ViewFormButtonBinding) 
                         newCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
                         data.dateValue = newCalendar.time
-                        data.value = newCalendar.time.toHumanFormatFull()
-                        view.btnMain.text = data.dateValue?.toHumanDate()
+                        data.value = newCalendar.time.toHumanFullFormat()
+                        view.btnMain.text = data.dateValue?.toHumanDateFormat()
                         data.onClickView(data, this)
 
                     }, year, month, day)
@@ -111,8 +109,8 @@ class FormDateTimeButtonHolder(_context: Context, _view: ViewFormButtonBinding) 
                         newCalendar.set(Calendar.MINUTE, newMinute)
 
                         data.dateValue = newCalendar.time
-                        data.value = newCalendar.time.toHumanFormatFull()
-                        view.btnMain.text = data.dateValue?.toHumanHour()
+                        data.value = newCalendar.time.toHumanFullFormat()
+                        view.btnMain.text = data.dateValue?.toHumanHourFormat()
                         data.onClickView(data, this)
 
                     }, hour, minute, true)

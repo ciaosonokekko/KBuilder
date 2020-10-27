@@ -3,76 +3,61 @@ package it.ciaosonokekko.formbuilder.extension
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val SERVER_FORMAT = "yyyy-MM-dd"
+const val SERVER_DATE_FORMAT = "yyyy-MM-dd"
 const val SERVER_HOUR_FORMAT = "HH:mm:ss"
-const val HUMAN_FORMAT_FULL = "dd/MM/yyyy HH:mm:ss"
-const val HUMAN_FORMAT = "dd/MM/yyyy"
-const val HUMAN_FORMAT_COMPACT = "dd/MM"
+const val SERVER_FULL_FORMAT = "yyyy-MM-dd HH:mm:ss"
+const val HUMAN_DATE_FORMAT = "dd/MM/yyyy"
 const val HUMAN_HOUR_FORMAT = "HH:mm"
+const val HUMAN_FULL_FORMAT = "HH:mm"
 
-fun Date.toHumanFormatFull(): String {
-    val format = SimpleDateFormat(HUMAN_FORMAT_FULL)
-    return format.format(this)
+fun Date.toStringDate(format: String, default: String? = null): String {
+    return try {
+        SimpleDateFormat(format, Locale.ITALIAN).format(this)
+    } catch (ignore: Exception) {
+        default ?: ""
+    }
 }
 
-fun String.toDateFromHumanFormatFull() : Date? {
-    val format = SimpleDateFormat(HUMAN_FORMAT_FULL)
-    return format.parse(this)
+fun String.toDate(format: String): Date? {
+    return try {
+        SimpleDateFormat(format, Locale.ITALIAN).parse(this)
+    } catch (ignore: Exception) {
+        null
+    }
 }
 
-fun Date.toServerFormat() : String {
-    val format = SimpleDateFormat(SERVER_FORMAT)
-    return format.format(this)
+fun Date.toServerFullFormat(): String {
+    return toStringDate(SERVER_FULL_FORMAT)
 }
 
-fun Date.toServerHourFormat() : String {
-    val format = SimpleDateFormat(SERVER_HOUR_FORMAT)
-    return format.format(this)
+fun Date.toServerDateFormat(): String {
+    return toStringDate(SERVER_DATE_FORMAT)
 }
 
-fun Date.getDaysAgo(daysAgo: Int) : Date {
-    val calendar = Calendar.getInstance()
-    calendar.time = this
-    calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
-
-    return calendar.time
+fun Date.toServerHourFormat(): String {
+    return toStringDate(SERVER_HOUR_FORMAT)
 }
 
-fun Date.toHumanDate() : String {
-    val format = SimpleDateFormat(HUMAN_FORMAT)
-    return format.format(this)
+fun Date.toHumanDateFormat(): String {
+    return toStringDate(HUMAN_DATE_FORMAT)
 }
 
-fun Date.toHumanDateCompact() : String {
-    val format = SimpleDateFormat(HUMAN_FORMAT_COMPACT)
-    return format.format(this)
+fun String.toDateFromServerDateFormat(): Date? {
+    return toDate(SERVER_DATE_FORMAT)
 }
 
-fun String.toDateFromServer() : Date? {
-    val format = SimpleDateFormat(SERVER_FORMAT)
-    return format.parse(this)
+fun String.toDateFromServerHourFormat(): Date? {
+    return toDate(SERVER_HOUR_FORMAT)
 }
 
-fun String.toDateFromHourServer() : Date? {
-    val format = SimpleDateFormat(SERVER_HOUR_FORMAT)
-    return format.parse(this)
+fun String.toDateFromServerFullFormat(): Date? {
+    return toDate(SERVER_FULL_FORMAT)
 }
 
-fun Date.toHumanHour() : String {
-    val format = SimpleDateFormat(HUMAN_HOUR_FORMAT)
-    return format.format(this)
+fun Date.toHumanHourFormat(): String {
+    return toStringDate(HUMAN_HOUR_FORMAT)
 }
 
-fun Date.toHumanDateWithDayOfWeek(): String {
-    val date = this.toHumanDate()
-    return "${this.getDayOfWeek()} $date"
-}
-
-fun Date.toHumanDateCompactWithDayOfWeek(): String {
-    val date = this.toHumanDateCompact()
-    return "$date ${this.getDayOfWeek().substring(0, 3).capitalize()}"
-}
-
-fun Date.getDayOfWeek(): String {
-    return SimpleDateFormat("EEEE", Locale.ITALIAN).format(this)
+fun Date.toHumanFullFormat(): String {
+    return toStringDate(HUMAN_FULL_FORMAT)
 }

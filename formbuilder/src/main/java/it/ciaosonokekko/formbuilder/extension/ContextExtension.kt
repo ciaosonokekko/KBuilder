@@ -5,35 +5,32 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
-import com.khoiron.actionsheets.ActionSheet
-import com.khoiron.actionsheets.callback.ActionSheetCallBack
-import it.ciaosonokekko.formbuilder.R
+import androidx.appcompat.app.AppCompatActivity
 
-@Synchronized
-fun Context.createActionSheet(title: String, data: MutableList<String>, onClick: (Int) -> Unit) {
+//@Synchronized
+//fun Context.createActionSheet(title: String, data: MutableList<String>, onClick: (Int) -> Unit) {
+//
+//    ActionSheet(this, data)
+//        .setTitle(title)
+//        .setCancelTitle("Annulla")
+//        .setSizeTextTitle(20F)
+//        .setSizeTextCancel(20F)
+//        .setSizeTextData(16F)
+//        .setColorTitleCancel(ContextCompat.getColor(this, R.color.colorRed))
+//        .setColorTitle(ContextCompat.getColor(this, R.color.colorBlue))
+//        .setColorData(ContextCompat.getColor(this, R.color.colorText))
+//        .create(object : ActionSheetCallBack {
+//            override fun data(data: String, position: Int) {
+//                onClick(position)
+//            }
+//        })
+//}
 
-    ActionSheet(this, data)
-        .setTitle(title)
-        .setCancelTitle("Annulla")
-        .setSizeTextTitle(20F)
-        .setSizeTextCancel(20F)
-        .setSizeTextData(16F)
-        .setColorTitleCancel(ContextCompat.getColor(this, R.color.colorRed))
-        .setColorTitle(ContextCompat.getColor(this, R.color.colorBlue))
-        .setColorData(ContextCompat.getColor(this, R.color.colorText))
-        .create(object : ActionSheetCallBack {
-            override fun data(data: String, position: Int) {
-                onClick(position)
-            }
-        })
-}
-
-fun Context.getActivity(): Activity? {
+fun Context.getActivity(): AppCompatActivity? {
     var context: Context = this
     while (context is ContextWrapper) {
         if (context is Activity) {
-            return this as Activity
+            return this as AppCompatActivity
         }
         context = context.baseContext
     }

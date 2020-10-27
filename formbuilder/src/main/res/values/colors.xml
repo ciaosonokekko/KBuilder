@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">@color/colorBlue</color>
     <color name="colorBlack">#0B0808</color>
     <color name="colorDarkGray">#282727</color>
     <color name="colorSoftGray">#F7F6F8</color>

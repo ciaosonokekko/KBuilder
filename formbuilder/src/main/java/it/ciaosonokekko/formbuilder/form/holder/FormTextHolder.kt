@@ -4,10 +4,13 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
+import android.view.View.FOCUS_FORWARD
+import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
 import it.ciaosonokekko.formbuilder.databinding.ViewFormTextBinding
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.FormTextType
+
 
 class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view.root) {
 
@@ -17,6 +20,7 @@ class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view
         setup(data, onValueUpdate)
     }
 
+    @Suppress("UNUSED_EXPRESSION")
     private fun setup(data: Form.Text, onValueUpdate: (String) -> Unit) {
         view.txtTitle.text = data.title
 
@@ -62,7 +66,7 @@ class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view
             }
 
             FormTextType.TextArea -> {
-                view.txtText.inputType = InputType.TYPE_CLASS_TEXT
+                view.txtText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
                 view.txtText.setText(data.value)
                 view.txtText.setLines(3)
             }
@@ -70,7 +74,8 @@ class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view
             FormTextType.Numeric -> {
                 view.txtText.inputType = InputType.TYPE_CLASS_NUMBER
                 if (data.numberDecimal == true) {
-                    view.txtText.inputType = view.txtText.inputType or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    view.txtText.inputType =
+                        view.txtText.inputType or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 }
                 data.value?.let {
                     if (data.numberDecimal == true) {
@@ -79,12 +84,27 @@ class FormTextHolder(_view: ViewFormTextBinding) : RecyclerView.ViewHolder(_view
                         view.txtText.setText(it.toInt().toString())
                     }
                 }
+                if(data.emptyWithZero == true && data.value?.toInt() == 0) {
+                    view.txtText.setText("")
+                }
             }
         }
 
         view.txtText.isEnabled = data.editable == true
         if (data.editable == true) {
             view.txtText.addTextChangedListener(textWatcher)
+            view.txtText.setOnEditorActionListener { textView, i, _ ->
+                if (i == EditorInfo.IME_ACTION_NEXT) {
+                    val view = textView.focusSearch(FOCUS_FORWARD)
+                    if (view != null) {
+                        if (!view.requestFocus(FOCUS_FORWARD)) {
+                            true
+                        }
+                    }
+                    false
+                }
+                false
+            }
         } else {
             view.txtText.removeTextChangedListener(textWatcher)
         }

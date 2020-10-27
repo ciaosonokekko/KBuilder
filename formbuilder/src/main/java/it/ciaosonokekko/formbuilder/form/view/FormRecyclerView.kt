@@ -16,6 +16,8 @@ class FormRecyclerView : ConstraintLayout {
     private var adapter: FormRecyclerViewAdapter? = null
     private var elements = mutableListOf<Form>()
 
+    private var setupped: Boolean = false
+
     constructor(context: Context) : super(context) {
         initView()
     }
@@ -40,19 +42,30 @@ class FormRecyclerView : ConstraintLayout {
         view?.container?.layoutManager = layoutManager
         adapter = FormRecyclerViewAdapter(elements)
         view?.container?.adapter = adapter
+        setupped = true
+    }
+
+    private fun checkSetup() {
+        if(!setupped) {
+            setup()
+            setupped = true
+        }
     }
 
     fun addElement(element: Form) {
+        checkSetup()
         adapter?.addElement(element)
     }
 
     fun addElements(elements: MutableList<Form>) {
+        checkSetup()
         elements.forEach {
             adapter?.addElement(it)
         }
     }
 
     fun addElements(vararg elements: Form) {
+        checkSetup()
         elements.forEach {
             adapter?.addElement(it)
         }

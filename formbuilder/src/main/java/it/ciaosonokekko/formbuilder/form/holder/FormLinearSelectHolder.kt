@@ -5,10 +5,12 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import it.ciaosonokekko.formbuilder.R
 import it.ciaosonokekko.formbuilder.databinding.ViewFormLinearSelectBinding
-import it.ciaosonokekko.formbuilder.extension.createActionSheet
+import it.ciaosonokekko.formbuilder.extension.getActivity
 import it.ciaosonokekko.formbuilder.extension.requestFocusAndHideKeyboard
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.FormViewBaseHolder
+import it.ciaosonokekko.formbuilder.form.view.SheetDialogCallBack
+import it.ciaosonokekko.formbuilder.form.view.ViewSheetDialog
 
 class FormLinearSelectHolder(_context: Context, _view: ViewFormLinearSelectBinding) :
     FormViewBaseHolder(_view.root) {
@@ -24,6 +26,12 @@ class FormLinearSelectHolder(_context: Context, _view: ViewFormLinearSelectBindi
         view.txtSelect.text = value
     }
 
+    fun updateValues(values: List<String>) {
+        var value = ""
+        values.forEach { value += "$it, " }
+        view.txtSelect.text = value
+    }
+
     fun setup(data: Form.LinearSelect) {
         view.txtTitle.text = data.title
 
@@ -35,7 +43,11 @@ class FormLinearSelectHolder(_context: Context, _view: ViewFormLinearSelectBindi
             view.txtSubtitle.visibility = View.GONE
         }
 
-        view.txtSelect.text = data.value
+        if (data.multiSelect == true) {
+            updateValues(data.selectedValues ?: listOf())
+        } else {
+            updateValue(data.value ?: "")
+        }
 
         if (!data.value.isNullOrEmpty() || data.mandatory == false) {
             view.txtTitle.setTextColor(ContextCompat.getColor(context, R.color.colorText))
@@ -47,10 +59,19 @@ class FormLinearSelectHolder(_context: Context, _view: ViewFormLinearSelectBindi
         view.root.setOnClickListener {
             context.requestFocusAndHideKeyboard(view.root)
             data.values?.let { list ->
-                context.createActionSheet(data.title, list.toMutableList()) { position ->
-                    list.getOrNull(position)?.let {
-                        data.onValueUpdate(data, thisView, position, it)
-                        view.txtSelect.text = it
+                context.getActivity()?.supportFragmentManager?.let { supportFragmentManager ->
+                    ViewSheetDialog.newInstance(data.title, list, data.selectedValues, data.multiSelect, data.mandatory, object : SheetDialogCallBack{
+                        override fun itemOnClick(position: Int, value: String) {
+                            updateValue(value)
+                            data.onValueUpdate(data, thisView, position, value)
+                        }
+
+                        override fun itemsOnClick(values: List<String>) {
+                            updateValues(values)
+                            data.onValuesUpdate(data, thisView, values)
+                        }
+                    }).apply {
+                        show(supportFragmentManager, tag)
                     }
                 }
             } ?: run {

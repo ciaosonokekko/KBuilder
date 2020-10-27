@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
+        <item name="checkboxStyle">@style/CheckboxTheme</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+    <style name="CheckboxTheme" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/colorPrimary</item>
+    </style>
+</resources>
