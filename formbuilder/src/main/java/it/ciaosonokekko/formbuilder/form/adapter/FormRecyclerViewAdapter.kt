@@ -14,6 +14,7 @@ const val ITEM_VIEW_TYPE_SELECT = 4
 const val ITEM_VIEW_TYPE_LINEAR_SELECT = 5
 const val ITEM_VIEW_TYPE_BUTTON = 6
 const val ITEM_VIEW_TYPE_DATE_TIME_BUTTON = 7
+const val ITEM_VIEW_TYPE_LABEL = 8
 
 class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -125,6 +126,12 @@ class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
                 }
             }
 
+            ITEM_VIEW_TYPE_LABEL -> {
+                (elements[position] as? Form.Label)?.let {
+                    (holder as? FormLabelHolder)?.bind(it)
+                }
+            }
+
             else -> {
 
             }
@@ -140,6 +147,7 @@ class FormRecyclerViewAdapter(var _elements: MutableList<Form>) :
             is Form.LinearSelect -> ITEM_VIEW_TYPE_LINEAR_SELECT
             is Form.Button -> ITEM_VIEW_TYPE_BUTTON
             is Form.DateTimeButton -> ITEM_VIEW_TYPE_DATE_TIME_BUTTON
+            is Form.Label -> ITEM_VIEW_TYPE_LABEL
         }
     }
 

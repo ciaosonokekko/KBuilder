@@ -36,10 +36,22 @@ sealed class Form(
 
     class Section(
         id: String? = null,
-        title: String
+        title: String,
+        subTitle: String? = null,
     ) : Form(
         id = id ?: UUID.randomUUID().toString(),
-        title = title
+        title = title,
+        subTitle = subTitle
+    )
+
+    class Label(
+        id: String? = null,
+        title: String,
+        subTitle: String? = null,
+    ) : Form(
+        id = id ?: UUID.randomUUID().toString(),
+        title = title,
+        subTitle = subTitle
     )
 
     class Text(
