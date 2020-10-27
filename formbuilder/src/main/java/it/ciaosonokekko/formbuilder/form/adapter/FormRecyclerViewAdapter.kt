@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import it.ciaosonokekko.formbuilder.databinding.*
 import it.ciaosonokekko.formbuilder.form.Form
 import it.ciaosonokekko.formbuilder.form.holder.*
-import it.ciaosonokekko.formbuilder.form.view.FormSectionHolder
 
 const val ITEM_VIEW_TYPE_SECTION = 1
 const val ITEM_VIEW_TYPE_TEXT = 2
